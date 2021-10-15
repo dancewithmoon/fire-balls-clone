@@ -7,24 +7,24 @@ public class TowerBuilder : MonoBehaviour
     [SerializeField] private Transform _buildPoint;
     [SerializeField] private Block _block;
     private float _blockHeigth = 0;
-    private readonly Queue<Block> _blocks = new Queue<Block>();
 
     private void Awake()
     {
         _blockHeigth = _block.GetComponentInChildren<MeshFilter>().GetRealHeigth();
-        Build();
     }
 
-    private void Build()
+    public List<Block> Build()
     {
+        List<Block> blocks = new List<Block>();
         Transform currentPoint = _buildPoint;
 
         for (int i = 0; i < _towerSize; i++)
         {
             Block newBlock = BuildBlock(currentPoint);
-            _blocks.Enqueue(newBlock);
+            blocks.Add(newBlock);
             currentPoint = newBlock.transform;
         }
+        return blocks;
     }
 
     private Block BuildBlock(Transform currentBuildPoint)
