@@ -6,11 +6,12 @@ public class TowerBuilder : MonoBehaviour
     [SerializeField] private float _towerSize;
     [SerializeField] private Transform _buildPoint;
     [SerializeField] private Block _block;
-
+    private float _blockHeigth = 0;
     private readonly Queue<Block> _blocks = new Queue<Block>();
 
     private void Awake()
     {
+        _blockHeigth = _block.GetComponentInChildren<MeshFilter>().GetRealHeigth();
         Build();
     }
 
@@ -33,6 +34,13 @@ public class TowerBuilder : MonoBehaviour
 
     private Vector3 GetBuildPoint(Transform currentSegment)
     {
-        return new Vector3(_buildPoint.position.x, currentSegment.position.y + currentSegment.localScale.y / 2 + _block.transform.localScale.y / 2, _buildPoint.position.z);
+        var currentMeshFilter = currentSegment.GetComponentInChildren<MeshFilter>();
+        float currentSegmentHeigth = 0;
+        if (currentMeshFilter != null)
+        {
+            currentSegmentHeigth = currentMeshFilter.GetRealHeigth();
+        }
+
+        return new Vector3(_buildPoint.position.x, currentSegment.position.y + currentSegmentHeigth / 2 + _blockHeigth / 2, _buildPoint.position.z);
     }
 }
