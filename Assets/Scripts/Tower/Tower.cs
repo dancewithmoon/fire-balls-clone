@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(TowerBuilder))]
@@ -7,6 +8,10 @@ public class Tower : MonoBehaviour
     [SerializeField] private float moveDownSpeed = 0.1f;
     private TowerBuilder _builder;
     private List<Block> _blocks;
+
+    public int Height => _blocks.Count;
+
+    public event Action<int> HeightUpdated;
 
     private void Awake()
     {
@@ -22,6 +27,7 @@ public class Tower : MonoBehaviour
     {
         broken.Broken -= OnBlockBroken;
         _blocks.Remove(broken);
-        _blocks.ForEach((block) => block.MoveDown(broken.GetRealHeigth(), moveDownSpeed));
+        _blocks.ForEach((block) => block.MoveDown(broken.GetRealHeight(), moveDownSpeed));
+        HeightUpdated?.Invoke(Height);
     }
 }

@@ -17,11 +17,11 @@ public class Block : MonoBehaviour
         transform.DOMoveY(transform.position.y - distance, movingSpeed);
     }
 
-    public float GetRealHeigth()
+    public float GetRealHeight()
     {
         if(TryGetComponent(out MeshFilter meshFilter))
         {
-            return meshFilter.GetRealHeigth();  
+            return meshFilter.GetRealHeight();  
         }
 
         Debug.LogError($"Could not found {nameof(MeshFilter)} component!");
