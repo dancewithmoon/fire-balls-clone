@@ -41,6 +41,6 @@ public class TowerBuilder : MonoBehaviour
             currentSegmentHeigth = currentMeshFilter.GetRealHeigth();
         }
 
-        return new Vector3(_buildPoint.position.x, currentSegment.position.y + currentSegmentHeigth / 2 + _blockHeigth / 2, _buildPoint.position.z);
+        return new Vector3(_block.transform.position.x, currentSegment.position.y + currentSegmentHeigth / 2 + _blockHeigth / 2, _block.transform.position.z);
     }
 }

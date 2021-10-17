@@ -986,7 +986,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1190230853}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 544772201}
@@ -1006,7 +1006,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _towerSize: 10
   _buildPoint: {fileID: 1190230854}
-  _block: {fileID: 5212410529548010096, guid: deb957e8cb6652643a1a8593f60f57d0, type: 3}
+  _block: {fileID: 1743219742367166888, guid: deb957e8cb6652643a1a8593f60f57d0, type: 3}
 --- !u!114 &1190230856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1019,6 +1019,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c2bea502096fe548a58235ef1f854cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveDownSpeed: 0.1
 --- !u!1001 &1330403461
 PrefabInstance:
   m_ObjectHideFlags: 0

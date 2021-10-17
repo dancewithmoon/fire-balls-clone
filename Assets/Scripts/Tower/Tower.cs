@@ -4,6 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(TowerBuilder))]
 public class Tower : MonoBehaviour
 {
+    [SerializeField] private float moveDownSpeed = 0.1f;
     private TowerBuilder _builder;
     private List<Block> _blocks;
 
@@ -21,11 +22,6 @@ public class Tower : MonoBehaviour
     {
         broken.Broken -= OnBlockBroken;
         _blocks.Remove(broken);
-
-        foreach (Block block in _blocks)
-        {
-            block.transform.position = new Vector3(block.transform.position.x, block.transform.position.y - broken.GetRealHeigth(), block.transform.position.z);
-        }
+        _blocks.ForEach((block) => block.MoveDown(broken.GetRealHeigth(), moveDownSpeed));
     }
-
 }

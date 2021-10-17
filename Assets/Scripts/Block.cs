@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using UnityEngine;
 
 public class Block : MonoBehaviour
@@ -10,15 +11,20 @@ public class Block : MonoBehaviour
         Broken?.Invoke(this);
         Destroy(gameObject);
     }
+    
+    public void MoveDown(float distance, float movingSpeed)
+    {
+        transform.DOMoveY(transform.position.y - distance, movingSpeed);
+    }
 
     public float GetRealHeigth()
     {
-        var meshFilter = GetComponentInChildren<MeshFilter>();
-        if(meshFilter == null)
+        if(TryGetComponent(out MeshFilter meshFilter))
         {
-            Debug.LogError($"Could not found {nameof(MeshFilter)} component!");
-            return 0;
+            return meshFilter.GetRealHeigth();  
         }
-        return meshFilter.GetRealHeigth();
+
+        Debug.LogError($"Could not found {nameof(MeshFilter)} component!");
+        return 0;
     }
 }
