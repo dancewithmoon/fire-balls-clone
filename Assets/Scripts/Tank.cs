@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using UnityEngine;
 
 public class Tank : MonoBehaviour
@@ -12,6 +13,7 @@ public class Tank : MonoBehaviour
 
     private bool isInCooldown;
     private BulletsPool _bulletsPool;
+    private readonly float _recoilDistance = 0.3f;
 
     private void Awake()
     {
@@ -36,8 +38,10 @@ public class Tank : MonoBehaviour
         Bullet instance = _bulletsPool.GetBullet();
         instance.PrepareToStart(_shootPoint.position, Quaternion.identity);
         instance.Fire();
-
+   
         StartCoroutine(WaitForCooldown());
+
+        transform.DOMoveZ(transform.position.z - _recoilDistance, _shootCooldown / 2).SetLoops(2, LoopType.Yoyo);
     }
 
     private IEnumerator WaitForCooldown()
