@@ -27,7 +27,7 @@ public class Tower : MonoBehaviour
     {
         broken.Broken -= OnBlockBroken;
         _blocks.Remove(broken);
-        _blocks.ForEach((block) => block.MoveDown(broken.GetRealHeight(), moveDownSpeed));
+        _blocks.ForEach((block) => block.MoveDown(broken.RealHeight, moveDownSpeed));
         HeightUpdated?.Invoke(Height);
     }
 }
