@@ -1,28 +1,35 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class PointerDownHandlerImpl : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    private bool isPointerDown;
+    private IEnumerator invokePointerDown;
 
     public event Action PointerDown;
 
-    private void Update()
+    private void Awake()
     {
-        if (isPointerDown == true)
-        {
-            PointerDown?.Invoke();
-        }
+        invokePointerDown = InvokePointerDown();
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        isPointerDown = true;
+        StartCoroutine(invokePointerDown);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        isPointerDown = false;
+        StopCoroutine(invokePointerDown);
+    }
+
+    private IEnumerator InvokePointerDown()
+    {
+        while (true)
+        {
+            PointerDown?.Invoke();
+            yield return null;
+        }
     }
 }
