@@ -7,16 +7,14 @@ public class Block : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _destroyEffect;
     private MeshRenderer _meshRenderer;
-    private MeshFilter _meshFilter;
 
-    public float RealHeight => _meshFilter.GetRealHeight();
+    public float RealHeight => GetComponent<MeshFilter>().GetRealHeight();
 
     public event Action<Block> Broken;
 
     private void Awake()
     {
         _meshRenderer = GetComponent<MeshRenderer>();
-        _meshFilter = GetComponent<MeshFilter>();
     }
 
     public void Break()

@@ -1,7 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletsPool
+public interface IBulletsGetter
+{
+    Bullet GetBullet();
+}
+
+public class BulletsPool : IBulletsGetter
 {
     private readonly int _maxPoolSize = 10;
     private readonly Queue<Bullet> _bulletsPool = new Queue<Bullet>();
@@ -9,9 +14,10 @@ public class BulletsPool
 
     private Bullet _bullet;
 
-    public BulletsPool(Bullet bullet)
+    public BulletsPool(Bullet bullet, int maxPoolSize)
     {
         _bulletsParent = new GameObject("Bullets").transform;
+        _maxPoolSize = maxPoolSize;
         _bullet = bullet;
     }
 
@@ -28,7 +34,7 @@ public class BulletsPool
         }
 
         _bulletsPool.Enqueue(bullet);
-       
+
         return bullet;
     }
 }

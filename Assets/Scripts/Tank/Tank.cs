@@ -5,41 +5,50 @@ using UnityEngine;
 public class Tank : MonoBehaviour
 {
     [SerializeField] private Transform _shootPoint;
-    [SerializeField] private Bullet _bulletPrefab;
     [SerializeField] private float _shootCooldown;
 
-    private bool isInCooldown;
-    private BulletsPool _bulletsPool;
     private readonly float _recoilDistance = 0.3f;
+    private ITankShooter _shooter;
+    private bool _isInCooldown;
 
-    private void Awake()
+    public void Init(ITankShooter shooter)
     {
-        _bulletsPool = new BulletsPool(_bulletPrefab);
+        _shooter = shooter;
+        _shooter.Shot += OnShot;
+    }
+
+    private void OnEnable()
+    {
+        if(_shooter == null)
+        {
+            return;
+        }
+        _shooter.Shot += OnShot;
     }
 
     public void TryShoot()
     {
-        if (isInCooldown == true)
+        if (_isInCooldown == true)
             return;
 
-        Shoot();
+        _shooter.Shoot(_shootPoint.position);
     }
 
-    private void Shoot()
+    private void OnShot()
     {
-        Bullet instance = _bulletsPool.GetBullet();
-        instance.PrepareToStart(_shootPoint.position, Quaternion.identity);
-        instance.Fire();
-   
         StartCoroutine(WaitForCooldown());
-
         transform.DOMoveZ(transform.position.z - _recoilDistance, _shootCooldown / 2).SetLoops(2, LoopType.Yoyo);
     }
 
     private IEnumerator WaitForCooldown()
     {
-        isInCooldown = true;
+        _isInCooldown = true;
         yield return new WaitForSeconds(_shootCooldown);
-        isInCooldown = false;
+        _isInCooldown = false;
+    }
+
+    private void OnDisable()
+    {
+        _shooter.Shot -= OnShot;
     }
 }
